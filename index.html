@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoilCalc</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>CoilCalc</h1>
+        <p>Transformer and coil winding calculator</p>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab active" data-tab="transformer">Transformer</button>
+        <button class="tab" data-tab="rewind">Rewind</button>
+        <button class="tab" data-tab="wires">Wires</button>
+    </nav>
+    
+    <main>
+        <section id="transformer" class="panel active">
+            <h2>Transformer design</h2>
+            <div class="form">
+                <label>Primary voltage (V)
+                    <input type="number" id="tr-u1" value="230">
+                </label>
+                <label>Frequency (Hz)
+                    <input type="number" id="tr-f" value="50">
+                </label>
+                <label>Secondary voltage (V)
+                    <input type="number" id="tr-u2" value="12">
+                </label>
+                <label>Secondary current (A)
+                    <input type="number" id="tr-i2" value="2">
+                </label>
+                <label>Core type
+                    <select id="tr-core">
+                        <option value="ei">EI core</option>
+                        <option value="Toroid">Toroid</option>
+                    </select>
+                </label>
+                <label>Current density (A/mm2)
+                    <input type="number" id="tr-j" value="3" step="0.1">
+                </label>
+                <button id="tr-calc">Calculate</button>
+            </div>
+          <p id="tr-error"></p>
+          <div id="tr-result" class="result">
+            <p>Output power: <span id="tr-p2">-</span> W</p>
+            <p>Input power: <span id="tr-p1">-</span> W</p>
+            <p>Core cross-section: <span id="tr-s">-</span>cm2</p>
+            <p>Turns per volt: <span id="tr-n">-</span></p>
+            <p>Primary: <span id="tr-n1">-</span>turns, wire <span id="tr-d1">-</span> mm, <span id="tr-i1"></span> A</p>
+            <p>Secondary: <span id="tr-n2">-</span>turns, wire <span id="tr-d2">-</span>mm, <span id="tr-i2out">-</span> A</p>
+          </div>
+        </section>
+        <section id="rewind" class="panel">
+            <h2>Rewind existing transformer</h2>
+        </section>
+        <section id="wires" class="panel">
+            <h2>Wire table</h2>
+        </section>
+    </main>
+    <script src="transformer.js"></script>
+    <script src="code.js"></script>
+</body>
+</html>
