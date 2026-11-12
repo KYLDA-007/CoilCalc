@@ -45,6 +45,7 @@
                 </label>
                 <button id="tr-calc">Calculate</button>
             </div>
+
           <p id="tr-error"></p>
           <div id="tr-result" class="result">
             <p>Output power: <span id="tr-p2">-</span> W</p>
@@ -57,11 +58,40 @@
         </section>
         <section id="rewind" class="panel">
             <h2>Rewind existing transformer</h2>
+                <div class="form">
+                    <label>Primary voltage (V)
+                        <input type="number" id="rw-u1" value="230">
+                    </label>
+                    <label>Test winding turns
+                        <input type="number" id="rw-test-turns" value="20">
+                    </label>
+                    <label>Measured voltage (V)
+                        <input type="number" id="rw-test-volt" value="3.4" step="0.01">
+                    </label>
+                    <label>New secondary voltage (V)
+                        <input type="number" id="rw-sec-volt" value="12">
+                    </label>
+                    <label>New secondary current (A)
+                        <input type="number" id="rw-sec-curr" value="2" step="0.1">
+                    </label>
+                    <label>Current density (A/mm2)
+                        <input type="number" id="rw-density" value="3" step="0.1">
+                    </label>
+                    <button id="rw-calc">Calculate</button>
+                </div>
+                <p id="rw-error"></p>
+                <div id="rw-result" class="result">
+                    <p>Turns per volt: <span id="rw-n">-</span></p>
+                    <p>Primary (check): <span id="rw-n1">-</span> turns</p>
+                    <p>New secondary: <span id="rw-n2">-</span> turns, wire <span id="rw-d2">-</span> mm, <span id="rw-i2out">-</span> A</p>
+                </div>
+            
         </section>
         <section id="wires" class="panel">
             <h2>Wire table</h2>
         </section>
     </main>
+    <script src="rewind.js"></script>
     <script src="transformer.js"></script>
     <script src="code.js"></script>
 </body>

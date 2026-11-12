@@ -50,3 +50,31 @@ function calcTransformer() {
     document.getElementById("tr-i2out").textContent = i2.toFixed(2);
 }
 document.getElementById("tr-calc").addEventListener("click", calcTransformer);
+
+function calcRewind() {
+    const u1 = parseFloat(document.getElementById("rw-u1").value);
+    const testTurns = parseFloat(document.getElementById("rw-test-turns").value);
+    const testVolt = parseFloat(document.getElementById("rw-test-volt").value);
+    const u2 = parseFloat(document.getElementById("rw-sec-volt").value);
+    const i2 = parseFloat(document.getElementById("rw-sec-curr").value);
+    const j = parseFloat(document.getElementById("rw-density").value);
+    const error = document.getElementById("rw-error");
+
+    if ([u1, testTurns, testVolt, u2, i2, j].some(v => isNaN(v) || v <= 0)) {
+        error.textContent = "Please fill in all values (greater than 0).";
+        return;
+    }
+    
+    const n = testTurns / testVolt;
+    const n1 = Math.round(u1 * n);
+    const n2 = Math.round(u2 * n * 1.05);
+    const d2 = 1.13 * Math.sqrt(i2 / j);
+
+    error.textContent = "";
+    document.getElementById("rw-n").textContent = n.toFixed(2);
+    document.getElementById("rw-n1").textContent = n1;
+    document.getElementById("rw-n2").textContent = n2;
+    document.getElementById("rw-d2").textContent = d2.toFixed(2);
+    document.getElementById("rw-i2out").textContent = i2.toFixed(2);
+}
+document.getElementById("rw-calc").addEventListener("click", calcRewind);
