@@ -75,3 +75,20 @@ main {
 .result {
     margin-top: 20px;
 }
+.wire-table {
+    width: 100%;
+    margin-top: 15px;
+    border-collapse: collapse;
+}
+.wire-table th,
+.wire-table td {
+    padding: 6px 10px;
+    text-align: right;
+    border-bottom: 1px solid #3a3a44;
+}
+.wire-table th {
+    color: #e8a33d;
+}
+.wire-table tbody tr:hover {
+    background: #2b2b33;
+}

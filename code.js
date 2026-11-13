@@ -78,3 +78,40 @@ function calcRewind() {
     document.getElementById("rw-i2out").textContent = i2.toFixed(2);
 }
 document.getElementById("rw-calc").addEventListener("click", calcRewind);
+
+const wireDiameters = [
+    0.10, 0.12, 0.15, 0.18, 0.20, 0.22, 0.25, 0.28, 0.30, 0.32,
+    0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80,
+    0.85, 0.90, 1.00, 1.10, 1.20, 1.30, 1.40, 1.50, 1.60, 1.80,
+    2.00, 2.24, 2.50 
+];
+function buildWireTable() {
+    const j = parseFloat(document.getElementById("wr-j").value);
+    const body = document.getElementById("wr-body");
+    body.innerHTML = "";
+
+    wireDiameters.forEach(d => {
+        const area = Math.PI * d * d / 4;
+        const r = 0.0172 / area;
+        const awg= Math.round(36 - 39 * Math.log(d / 0.127) / Math.log(92));
+        const imax = area * j;
+
+        const values = [
+            d.toFixed(2),
+            awg,
+            area.toFixed(3),
+            r.toFixed(3),
+            isNaN(imax) ? "-" : imax.toFixed(2)
+        ];
+
+        const row = document.createElement("tr");
+        values.forEach(v => {
+            const cell = document.createElement("td");
+            cell.textContent = v;
+            row.appendChild(cell);
+        });
+        body.appendChild(row);
+    });
+}
+document.getElementById("wr-j").addEventListener("input", buildWireTable);
+buildWireTable();
