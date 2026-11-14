@@ -48,6 +48,8 @@ function calcTransformer() {
     document.getElementById("tr-n2").textContent = n2;
     document.getElementById("tr-d2").textContent = d2.toFixed(2);
     document.getElementById("tr-i2out").textContent = i2.toFixed(2);
+    document.getElementById("tr-w1").textContent = standardWire(d1);
+    document.getElementById("tr-w2").textContent = standardWire(d2);
 }
 document.getElementById("tr-calc").addEventListener("click", calcTransformer);
 
@@ -76,6 +78,7 @@ function calcRewind() {
     document.getElementById("rw-n2").textContent = n2;
     document.getElementById("rw-d2").textContent = d2.toFixed(2);
     document.getElementById("rw-i2out").textContent = i2.toFixed(2);
+    document.getElementById("rw-w2").textContent = standardWire(d2);
 }
 document.getElementById("rw-calc").addEventListener("click", calcRewind);
 
@@ -115,3 +118,12 @@ function buildWireTable() {
 }
 document.getElementById("wr-j").addEventListener("input", buildWireTable);
 buildWireTable();
+
+function standardWire(d) {
+    const w = wireDiameters.find(x => x >= d);
+    if (w === undefined) {
+        return "over 2.50 mm - use parallel wires";
+    }
+    const awg = Math.round(36 - 39 * Math.log(w / 0.127) / Math.log(92));
+    return w.toFixed(2) + " mm (AWG " + ")";
+}

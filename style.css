@@ -10,8 +10,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #e6e6e6;
-    color: e6e6e6;
+    background: #1E1E24;
+    color: #e6e6e6;
 }
 header {
     padding: 20px;
@@ -74,6 +74,18 @@ main {
 }
 .result {
     margin-top: 20px;
+    padding: 15px;
+    background: #2b2b33;
+    border-left: 4px solid #e8a33d;
+    border-radius: 6px;
+}
+.result span {
+    color: #e8a33d;
+    font-weight: bold;
+}
+#tr-error,
+#tw-error {
+    color: #ff6b6b;
 }
 .wire-table {
     width: 100%;
