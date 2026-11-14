@@ -78,6 +78,12 @@
                     <label>Current density (A/mm2)
                         <input type="number" id="rw-density" value="3" step="0.1">
                     </label>
+                    <label>Center leg width (mm)
+                        <input type="number" id="rw-core-a" value="25">
+                    </label>
+                    <label>Core stack stickness (mm)
+                        <input type="number" id="rw-core-b" value="30">
+                    </label>
                     <button id="rw-calc">Calculate</button>
                 </div>
                 <p id="rw-error"></p>
@@ -86,6 +92,9 @@
                     <p>Primary (check): <span id="rw-n1">-</span> turns</p>
                     <p>New secondary: <span id="rw-n2">-</span> turns, wire <span id="rw-d2">-</span> mm, <span id="rw-i2out">-</span> A</p>
                     <p>Standard wire: <span id="rw-w2">-</span></p>
+                    <p>Core cross-section: <span id="rw-s">-</span> cm2</p>
+                    <p>Max output power: <span id="rw-pmax">-</span> W</p>
+                    <p id="rw-warning"></p>
                 </div>
             
         </section>

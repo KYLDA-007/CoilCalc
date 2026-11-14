@@ -60,9 +60,11 @@ function calcRewind() {
     const u2 = parseFloat(document.getElementById("rw-sec-volt").value);
     const i2 = parseFloat(document.getElementById("rw-sec-curr").value);
     const j = parseFloat(document.getElementById("rw-density").value);
+    const a = parseFloat(document.getElementById("rw-core-a").value);
+    const b = parseFloat(document.getElementById("rw-core-b").value);
     const error = document.getElementById("rw-error");
 
-    if ([u1, testTurns, testVolt, u2, i2, j].some(v => isNaN(v) || v <= 0)) {
+    if ([u1, testTurns, testVolt, u2, i2, j, a, b].some(v => isNaN(v) || v <= 0)) {
         error.textContent = "Please fill in all values (greater than 0).";
         return;
     }
@@ -71,6 +73,9 @@ function calcRewind() {
     const n1 = Math.round(u1 * n);
     const n2 = Math.round(u2 * n * 1.05);
     const d2 = 1.13 * Math.sqrt(i2 / j);
+    const s = a * b / 100;
+    const pMax = Math.pow(s / 1.2, 2) * 0.85;
+    const p2 = u2 * i2;
 
     error.textContent = "";
     document.getElementById("rw-n").textContent = n.toFixed(2);
@@ -79,6 +84,17 @@ function calcRewind() {
     document.getElementById("rw-d2").textContent = d2.toFixed(2);
     document.getElementById("rw-i2out").textContent = i2.toFixed(2);
     document.getElementById("rw-w2").textContent = standardWire(d2);
+    document.getElementById("rw-s").textContent = s.toFixed(2);
+    document.getElementById("rw-pmax").textContent = pMax.toFixed(1);
+
+    const warning = document.getElementById("rw-warning");
+    if (p2 > pMax) {
+        warning.textContent = "Warning: " + p2.toFixed(1) + " W is more than this core can handle!";
+        warning.style.color = "#ff6b6b";
+    } else {
+        warning.textContent = "OK: " + p2.toFixed(1) + " W is within the core's capacity.";
+        warning.style.color = "#6bcf7f";
+    }
 }
 document.getElementById("rw-calc").addEventListener("click", calcRewind);
 
