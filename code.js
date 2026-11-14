@@ -141,5 +141,25 @@ function standardWire(d) {
         return "over 2.50 mm - use parallel wires";
     }
     const awg = Math.round(36 - 39 * Math.log(w / 0.127) / Math.log(92));
-    return w.toFixed(2) + " mm (AWG " + ")";
+    return w.toFixed(2) + " mm (AWG " + awg + ")";
 }
+function calcCoil() {
+    const L = parseFloat(document.getElementById("co-l").value);
+    const d = parseFloat(document.getElementById("co-d").value);
+    const len = parseFloat(document.getElementById("co-len").value);
+    const error = document.getElementById("co-error");
+    if ([L, d, len].some(v => isNaN(v) || v <= 0)) {
+        error.textContent = "Please fill in all values (greater than 0).";
+        return;
+    }
+    const k =457.2 * d + 1016 * len;
+    const n = Math.round(Math.sqrt(L * k ) / d);
+    const lReal = d * d * n * n / k;
+    const wire = len / n;
+
+    error.textContent = "";
+    document.getElementById("co-n").textContent = n;
+    document.getElementById("co-lreal").textContent = lReal.toFixed(2);
+    document.getElementById("co-wire").textContent =  wire.toFixed(2);
+}
+document.getElementById("co-calc").addEventListener("click", calcCoil);

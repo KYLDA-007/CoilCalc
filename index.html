@@ -16,6 +16,7 @@
         <button class="tab active" data-tab="transformer">Transformer</button>
         <button class="tab" data-tab="rewind">Rewind</button>
         <button class="tab" data-tab="wires">Wires</button>
+        <button class="tab" data-tab="coils">Coils</button>
     </nav>
     
     <main>
@@ -37,7 +38,7 @@
                 <label>Core type
                     <select id="tr-core">
                         <option value="ei">EI core</option>
-                        <option value="Toroid">Toroid</option>
+                        <option value="Toroid">toroid</option>
                     </select>
                 </label>
                 <label>Current density (A/mm2)
@@ -50,7 +51,7 @@
           <div id="tr-result" class="result">
             <p>Output power: <span id="tr-p2">-</span> W</p>
             <p>Input power: <span id="tr-p1">-</span> W</p>
-            <p>Core cross-section: <span id="tr-s">-</span>cm2</p>
+            <p>Core cross-section: <span id="tr-s">-</span> cm2</p>
             <p>Turns per volt: <span id="tr-n">-</span></p>
             <p>Primary: <span id="tr-n1">-</span>turns, wire <span id="tr-d1">-</span> mm, <span id="tr-i1">-</span> A</p>
             <p>Secondary: <span id="tr-n2">-</span>turns, wire <span id="tr-d2">-</span>mm, <span id="tr-i2out">-</span> A</p>
@@ -81,7 +82,7 @@
                     <label>Center leg width (mm)
                         <input type="number" id="rw-core-a" value="25">
                     </label>
-                    <label>Core stack stickness (mm)
+                    <label>Core stack thickness (mm)
                         <input type="number" id="rw-core-b" value="30">
                     </label>
                     <button id="rw-calc">Calculate</button>
@@ -101,9 +102,9 @@
         <section id="wires" class="panel">
             <h2>Wire table</h2>
             <div class="form">
-                <Label>Current density (A/mm2)
+                <label>Current density (A/mm2)
                     <input type="number" id="wr-j" value="3" step="0.1">
-                </Label>
+                </label>
             </div>
             <table class="wire-table">
                 <thead>
@@ -117,6 +118,27 @@
                 </thead>
                 <tbody id="wr-body"></tbody>
             </table>
+        </section>
+        <section id="coils" class="panel">
+            <h2>Air-core coil</h2>
+            <div class="form">
+                <label>Inductance (µH)
+                    <input type="number" id="co-l" value="10" step="0.1">
+                </label>
+                <label>Coil diameter (mm)
+                    <input type="number" id="co-d" value="20">
+                </label>
+                <label>Coil length (mm)
+                    <input type="number" id="co-len" value="30">
+                </label>
+                <button id="co-calc">Calculate</button>
+            </div>
+            <p id="co-error"></p>
+            <div class="result">
+                <p>Turns: <span id="co-n">-</span></p>
+                <p>Actual inductance: <span id="co-lreal">-</span> µH</p>
+                <p>Max wire diameter: <span id="co-wire">-</span> mm</p>
+            </div>
         </section>
     </main>
     <script src="code.js"></script>
