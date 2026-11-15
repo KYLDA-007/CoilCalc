@@ -142,28 +142,32 @@
             <div id="co-toroid" class="form hidden">
                 <label>Core material
                     <select id="co-mat">
-                        <option value="20">Iron powder -1 (µ 20, blue)</option>
-                        <option value="10" selected>Iron powder -2 (µ 10, red)</option>
-                        <option value="35">Iron powder -3 (µ 35, grey)</option>
-                        <option value="8.5">Iron powder -6 (µ 8.5, yellow)</option>
-                        <option value="9">Iron powder -7 (µ 9, white)</option>
-                        <option value="35">Iron powder -8 (µ 35, yellow/red)</option>
-                        <option value="6">Iron powder -10 (µ 6, black)</option>
-                        <option value="25">Iron powder -15 (µ 25, red/white)</option>
-                        <option value="4">Iron powder -17 (µ 4, blue/yellow)</option>
-                        <option value="55">Iron powder -18 (µ 55, green/red)</option>
-                        <option value="75">Iron powder -26 (µ 75, yellow/white)</option>
-                        <option value="75">Iron powder -52 (µ 75, green/blue)</option>
-                        <option value="125">Ferrite 61 (µ 125)</option>
-                        <option value="800">Ferrite 43 (µ 800)</option>
-                        <option value="1500">Ferrite 31 (µ 1500)</option>
-                        <option value="2000">Ferrite 77 (µ 2000)</option>
-                        <option value="2200">Ferrite N87 (µ 2200)</option>
-                        <option value="2300">Ferrite 3C90 (µ 2300)</option>
-                        <option value="2500">Ferrite 73 (µ 2500)</option>
-                        <option value="5000">Ferrite 75 (µ 5000)</option>
+                        <option value="20" data-color="blue">Iron powder -1 (µ 20, blue)</option>
+                        <option value="10" selected data-color="red">Iron powder -2 (µ 10, red)</option>
+                        <option value="35" data-color="grey">Iron powder -3 (µ 35, grey)</option>
+                        <option value="8.5" data-color="yellow">Iron powder -6 (µ 8.5, yellow)</option>
+                        <option value="9" data-color="white">Iron powder -7 (µ 9, white)</option>
+                        <option value="35" data-color="yellow,red">Iron powder -8 (µ 35, yellow/red)</option>
+                        <option value="6" data-color="black">Iron powder -10 (µ 6, black)</option>
+                        <option value="25" data-color="red,white">Iron powder -15 (µ 25, red/white)</option>
+                        <option value="4" data-color="blue,yellow">Iron powder -17 (µ 4, blue/yellow)</option>
+                        <option value="55" data-color="green,red">Iron powder -18 (µ 55, green/red)</option>
+                        <option value="75" data-color="yellow,white">Iron powder -26 (µ 75, yellow/white)</option>
+                        <option value="75" data-color="green,blue">Iron powder -52 (µ 75, green/blue)</option>
+                        <option value="125" data-color="dimgray">Ferrite 61 (µ 125)</option>
+                        <option value="800" data-color="dimgray">Ferrite 43 (µ 800)</option>
+                        <option value="1500" data-color="dimgray">Ferrite 31 (µ 1500)</option>
+                        <option value="2000" data-color="dimgray">Ferrite 77 (µ 2000)</option>
+                        <option value="2200" data-color="dimgray">Ferrite N87 (µ 2200)</option>
+                        <option value="2300" data-color="dimgray">Ferrite 3C90 (µ 2300)</option>
+                        <option value="2500" data-color="dimgray">Ferrite 73 (µ 2500)</option>
+                        <option value="5000" data-color="dimgray">Ferrite 75 (µ 5000)</option>
                     </select>
                 </label>
+                <div class="swatch-row">
+                    <span>Core colour</span>
+                    <div id="co-swatch" class="swatch"></div>
+                </div>
                 <label>Outer diameter (mm)
                     <input type="number" id="co-od" value="12.7" step="0.1">
                 </label>

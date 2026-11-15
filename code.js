@@ -143,12 +143,37 @@ function standardWire(d) {
     const awg = Math.round(36 - 39 * Math.log(w / 0.127) / Math.log(92));
     return w.toFixed(2) + " mm (AWG " + awg + ")";
 }
+function wireBelow(d) {
+    const fits = wireDiameters.filter(x => x <= d);
+    if (fits.length === 0) {
+        return "less than 0.10 mm - too many turns for one layer";
+    }
+    const w = fits[fits.length - 1];
+    const awg = Math.round(36 - 39 * Math.log(w / 0.127) / Math.log(92));
+    const imax = Math.PI * w * w / 4 * 3;
+    return w.toFixed(2) + " mm (AWG " + awg + "), max " + imax.toFixed(2) + " A";
+}
     const coType = document.getElementById("co-type");
     coType.addEventListener("change", () => {
         const isToroid = coType.value ==="toroid";
         document.getElementById("co-solenoid").classList.toggle("hidden", isToroid);
         document.getElementById("co-toroid").classList.toggle("hidden", !isToroid);
     });
+    const coMat = document.getElementById("co-mat");
+
+    function updateSwatch() {
+        const option = coMat.options[coMat.selectedIndex];
+        const colors = option.dataset.color.split(",");
+        const swatch = document.getElementById("co-swatch");
+
+        if (colors.length === 1) {
+            swatch.style.background = colors[0];
+        } else {
+            swatch.style.background = "conic-gradient(" + colors[0] +" 0 50%, " + colors[1] + " 50% 100%)";
+        }
+    }
+    coMat.addEventListener("change", updateSwatch);
+    updateSwatch();
 
     function calcCoil(mode) {
         const type = coType.value;
@@ -199,6 +224,7 @@ function standardWire(d) {
     document.getElementById("co-lreal").textContent = lReal.toFixed(2);
     document.getElementById("co-al").textContent = type === "toroid" ? (c * 1000).toFixed(2) : "-";
     document.getElementById("co-wire").textContent = wire.toFixed(2);
+    document.getElementById("co-std").textContent = wireBelow(wire);
 }
 
 document.getElementById("co-find-n").addEventListener("click", () => calcCoil("turns"));

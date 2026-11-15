@@ -110,3 +110,23 @@ main {
 .form + .form {
     margin-top: 12px;
 }
+.swatch-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.swatch {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #555;
+    border-radius: 50%;
+}
+.swatch::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border: 1px solid #555;
+    border-radius: 50%;
+    background: #1e1e24;
+}
