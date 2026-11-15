@@ -37,6 +37,20 @@ function calcTransformer() {
     const i1 = p1 / u1;
     const d1 = 1.13 * Math.sqrt(i1 / j);
     const d2 = 1.13 * Math.sqrt(i2 / j);
+    const mlt = 4 * Math.sqrt(s) * 1.35 / 100;
+    const w1 = stdDiameter(d1);
+    const w2 = stdDiameter(d2);
+    const a1 = Math.PI * w1 * w1 / 4;
+    const a2 = Math.PI * w2 * w2 / 4;
+    const len1 = n1 * mlt;
+    const len2 = n2 * mlt;
+    const r1 = 0.0172 * len1 / a1;
+    const r2 = 0.0172 * len2 / a2;
+    const m1 = a1 * len1 * 8.9;
+    const m2 = a2 * len2 * 8.9;
+    const loss = i1 * i1 * r1 + i2 * i2 * r2;
+    const rTotal = r2 + r1 * Math.pow(n2 / n1, 2);
+    const drop = i2 * rTotal;
     error.textContent = "";
     document.getElementById("tr-p2").textContent = p2.toFixed(1);
     document.getElementById("tr-p1").textContent = p1.toFixed(1);
@@ -50,6 +64,14 @@ function calcTransformer() {
     document.getElementById("tr-i2out").textContent = i2.toFixed(2);
     document.getElementById("tr-w1").textContent = standardWire(d1);
     document.getElementById("tr-w2").textContent = standardWire(d2);
+    document.getElementById("tr-len1").textContent = lesn1.toFixed(1);
+    document.getElementById("tr-m1").textContent = m1.toFixed(0);
+    document.getElementById("tr-r1").textContent = r1.toFixed(2);
+    document.getElementById("tr-len2").textContent = len2.toFixed(1);
+    document.getElementById("tr-m2").textContent = m2.toFixed(0);
+    document.getElementById("tr-r2").textContent = r2.toFixed(3);
+    document.getElementById("tr-loss").textContent = loss.toFixed(2);
+    document.getElementById("tr-drop").textContent = drop.toFixed(2);
 }
 document.getElementById("tr-calc").addEventListener("click", calcTransformer);
 
@@ -143,6 +165,11 @@ function standardWire(d) {
     const awg = Math.round(36 - 39 * Math.log(w / 0.127) / Math.log(92));
     return w.toFixed(2) + " mm (AWG " + awg + ")";
 }
+function stdDiameter(d) {
+    const w = wireDiameters.find(x => x >= d);
+    return w === undefined ? d : w;
+}
+
 function wireBelow(d) {
     const fits = wireDiameters.filter(x => x <= d);
     if (fits.length === 0) {
