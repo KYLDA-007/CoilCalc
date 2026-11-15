@@ -84,7 +84,8 @@ main {
     font-weight: bold;
 }
 #tr-error,
-#tw-error {
+#tw-error,
+#co-error {
     color: #ff6b6b;
 }
 .wire-table {

@@ -64,7 +64,7 @@ function calcTransformer() {
     document.getElementById("tr-i2out").textContent = i2.toFixed(2);
     document.getElementById("tr-w1").textContent = standardWire(d1);
     document.getElementById("tr-w2").textContent = standardWire(d2);
-    document.getElementById("tr-len1").textContent = lesn1.toFixed(1);
+    document.getElementById("tr-len1").textContent = len1.toFixed(1);
     document.getElementById("tr-m1").textContent = m1.toFixed(0);
     document.getElementById("tr-r1").textContent = r1.toFixed(2);
     document.getElementById("tr-len2").textContent = len2.toFixed(1);
@@ -180,6 +180,10 @@ function wireBelow(d) {
     const imax = Math.PI * w * w / 4 * 3;
     return w.toFixed(2) + " mm (AWG " + awg + "), max " + imax.toFixed(2) + " A";
 }
+function stdBelow(d) {
+    const fits = wireDiameters.filter(x => x <= d);
+    return fits.length === 0 ? null : fits[fits.length - 1];
+}
     const coType = document.getElementById("co-type");
     coType.addEventListener("change", () => {
         const isToroid = coType.value ==="toroid";
@@ -207,6 +211,8 @@ function wireBelow(d) {
         const error = document.getElementById("co-error");
         let c;
         let space;
+        let base;
+        let extra;
     if (type === "solenoid") {
         const d = parseFloat(document.getElementById("co-d").value);
         const len = parseFloat(document.getElementById("co-len").value);
@@ -216,6 +222,8 @@ function wireBelow(d) {
         }
         c = d * d / (457.2 * d + 1016 * len);
         space = len;
+        base = Math.PI * d;
+        extra = Math.PI;
     } else {
         const mu = parseFloat(document.getElementById("co-mat").value);
         const od = parseFloat(document.getElementById("co-od").value);
@@ -227,6 +235,8 @@ function wireBelow(d) {
         }
         c = 0.2 * mu * h * Math.log(od / id) / 1000;
         space = Math.PI * id;
+        base = 2 * h + (od - id);
+        extra = 4;
     }
     let n;
     if (mode === "turns") {
@@ -245,6 +255,7 @@ function wireBelow(d) {
     }
     const lReal = c * n * n;
     const wire = space /n;
+    const w = stdBelow(wire);
 
     error.textContent = "";
     document.getElementById("co-n").textContent = n;
@@ -252,6 +263,17 @@ function wireBelow(d) {
     document.getElementById("co-al").textContent = type === "toroid" ? (c * 1000).toFixed(2) : "-";
     document.getElementById("co-wire").textContent = wire.toFixed(2);
     document.getElementById("co-std").textContent = wireBelow(wire);
+    if (w === null) {
+        document.getElementById("co-wlen").textContent = "-";
+        document.getElementById("co-mass").textContent = "-";
+        document.getElementById("co-res").textContent = "-";
+    } else {
+        const area = Math.PI * w * w / 4;
+        const wireLen = n * (base + extra * w) / 1000;
+        document.getElementById("co-wlen").textContent = wireLen.toFixed(2);
+        document.getElementById("co-mass").textContent = (area * wireLen * 8.9).toFixed(1);
+        document.getElementById("co-res").textContent = (0.0172 * wireLen / area).toFixed(3);
+    }
 }
 
 document.getElementById("co-find-n").addEventListener("click", () => calcCoil("turns"));
