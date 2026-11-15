@@ -12,3 +12,9 @@ The third tab is Wires, a table of standard copper wires from 0.10 to 2.50 mm. F
 
 ![](screenshots/coilcalc_final3.png)
 The fourth tab is Coils, for air-core coils and toroids. for an air-core coil you enter its diameter and length, for a toroid you pick the core material (powdered iron or ferrite, with a colour preview) and enter the core dimensions. You can calculate the turns from the inductance or the inductance from the turns. It also shows the AL value, the thickest wire that fits in a single layer, and the wire length, weight and resistance.
+
+## How to run 
+### Hosted instance
+- [Link!](https://kylda-007.github.io/CoilCalc)
+### Local hosting
+Clone the repository. Open `index.html` in your browser or set up a static web server
