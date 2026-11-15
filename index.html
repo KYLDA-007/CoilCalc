@@ -38,7 +38,7 @@
                 <label>Core type
                     <select id="tr-core">
                         <option value="ei">EI core</option>
-                        <option value="Toroid">toroid</option>
+                        <option value="toroid">Toroid</option>
                     </select>
                 </label>
                 <label>Current density (A/mm2)
@@ -120,24 +120,77 @@
             </table>
         </section>
         <section id="coils" class="panel">
-            <h2>Air-core coil</h2>
+            <h2>Coil calculator</h2>
             <div class="form">
-                <label>Inductance (µH)
-                    <input type="number" id="co-l" value="10" step="0.1">
-                </label>
+               <label>Coil type
+                    <select id="co-type">
+                        <option value="solenoid">Air-core solenoid</option>
+                        <option value="toroid">Toroid</option>
+                    </select>
+               </label>
+            </div>
+
+            <div id="co-solenoid" class="form">
                 <label>Coil diameter (mm)
                     <input type="number" id="co-d" value="20">
                 </label>
                 <label>Coil length (mm)
                     <input type="number" id="co-len" value="30">
                 </label>
-                <button id="co-calc">Calculate</button>
+            </div>
+
+            <div id="co-toroid" class="form hidden">
+                <label>Core material
+                    <select id="co-mat">
+                        <option value="20">Iron powder -1 (µ 20, blue)</option>
+                        <option value="10" selected>Iron powder -2 (µ 10, red)</option>
+                        <option value="35">Iron powder -3 (µ 35, grey)</option>
+                        <option value="8.5">Iron powder -6 (µ 8.5, yellow)</option>
+                        <option value="9">Iron powder -7 (µ 9, white)</option>
+                        <option value="35">Iron powder -8 (µ 35, yellow/red)</option>
+                        <option value="6">Iron powder -10 (µ 6, black)</option>
+                        <option value="25">Iron powder -15 (µ 25, red/white)</option>
+                        <option value="4">Iron powder -17 (µ 4, blue/yellow)</option>
+                        <option value="55">Iron powder -18 (µ 55, green/red)</option>
+                        <option value="75">Iron powder -26 (µ 75, yellow/white)</option>
+                        <option value="75">Iron powder -52 (µ 75, green/blue)</option>
+                        <option value="125">Ferrite 61 (µ 125)</option>
+                        <option value="800">Ferrite 43 (µ 800)</option>
+                        <option value="1500">Ferrite 31 (µ 1500)</option>
+                        <option value="2000">Ferrite 77 (µ 2000)</option>
+                        <option value="2200">Ferrite N87 (µ 2200)</option>
+                        <option value="2300">Ferrite 3C90 (µ 2300)</option>
+                        <option value="2500">Ferrite 73 (µ 2500)</option>
+                        <option value="5000">Ferrite 75 (µ 5000)</option>
+                    </select>
+                </label>
+                <label>Outer diameter (mm)
+                    <input type="number" id="co-od" value="12.7" step="0.1">
+                </label>
+                <label>Inner diameter (mm)
+                    <input type="number" id="co-id" value="7.7" step="0.1">
+                </label>
+                <label>Height (mm)
+                    <input type="number" id="co-h" value="4.83" step="0.01">
+                </label>
+            </div>
+
+            <div class="form">
+                <label>Inductance (µH)
+                    <input type="number" id="co-l" value="10" step="0.1">
+                </label>
+                <label>Turns
+                    <input type="number" id="co-turns" value="30">
+                </label>
+                <button id="co-find-n">Calculate turns</button>
+                <button id="co-find-l">Calculate inductance</button>
             </div>
             <p id="co-error"></p>
             <div class="result">
                 <p>Turns: <span id="co-n">-</span></p>
                 <p>Actual inductance: <span id="co-lreal">-</span> µH</p>
                 <p>Max wire diameter: <span id="co-wire">-</span> mm</p>
+                <p>AL value: <span id="co-al">-</span> nH/turn2</p>
             </div>
         </section>
     </main>

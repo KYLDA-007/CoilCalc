@@ -143,23 +143,64 @@ function standardWire(d) {
     const awg = Math.round(36 - 39 * Math.log(w / 0.127) / Math.log(92));
     return w.toFixed(2) + " mm (AWG " + awg + ")";
 }
-function calcCoil() {
-    const L = parseFloat(document.getElementById("co-l").value);
-    const d = parseFloat(document.getElementById("co-d").value);
-    const len = parseFloat(document.getElementById("co-len").value);
-    const error = document.getElementById("co-error");
-    if ([L, d, len].some(v => isNaN(v) || v <= 0)) {
-        error.textContent = "Please fill in all values (greater than 0).";
-        return;
+    const coType = document.getElementById("co-type");
+    coType.addEventListener("change", () => {
+        const isToroid = coType.value ==="toroid";
+        document.getElementById("co-solenoid").classList.toggle("hidden", isToroid);
+        document.getElementById("co-toroid").classList.toggle("hidden", !isToroid);
+    });
+
+    function calcCoil(mode) {
+        const type = coType.value;
+        const error = document.getElementById("co-error");
+        let c;
+        let space;
+    if (type === "solenoid") {
+        const d = parseFloat(document.getElementById("co-d").value);
+        const len = parseFloat(document.getElementById("co-len").value);
+        if ([d, len].some(v => isNaN(v) || v <= 0)) {
+            error.textContent = "Please fill in coil diameter and length.";
+            return;
+        }
+        c = d * d / (457.2 * d + 1016 * len);
+        space = len;
+    } else {
+        const mu = parseFloat(document.getElementById("co-mat").value);
+        const od = parseFloat(document.getElementById("co-od").value);
+        const id = parseFloat(document.getElementById("co-id").value);
+        const h = parseFloat(document.getElementById("co-h").value);
+        if ([od, id, h].some(v => isNaN(v) || v <= 0) || od <= id) {
+            error.textContent = "Please check core dimensions (outer must be bigger than inner).";
+            return;
+        }
+        c = 0.2 * mu * h * Math.log(od / id) / 1000;
+        space = Math.PI * id;
     }
-    const k =457.2 * d + 1016 * len;
-    const n = Math.round(Math.sqrt(L * k ) / d);
-    const lReal = d * d * n * n / k;
-    const wire = len / n;
+    let n;
+    if (mode === "turns") {
+        const L = parseFloat(document.getElementById("co-l").value);
+        if (isNaN(L) || L <= 0) {
+            error.textContent = "Please enter the inductance.";
+            return;
+        }
+        n = Math.max(1, Math.round(Math.sqrt(L / c)));
+    } else {
+        n = Math.round(parseFloat(document.getElementById("co-turns").value));
+        if (isNaN(n) || n <= 0) {
+            error.textContent = "Please enter  the number of turns.";
+            return;
+        }
+    }
+    const lReal = c * n * n;
+    const wire = space /n;
 
     error.textContent = "";
     document.getElementById("co-n").textContent = n;
     document.getElementById("co-lreal").textContent = lReal.toFixed(2);
-    document.getElementById("co-wire").textContent =  wire.toFixed(2);
+    document.getElementById("co-al").textContent = type === "toroid" ? (c * 1000).toFixed(2) : "-";
+    document.getElementById("co-wire").textContent = wire.toFixed(2);
 }
-document.getElementById("co-calc").addEventListener("click", calcCoil);
+
+document.getElementById("co-find-n").addEventListener("click", () => calcCoil("turns"));
+document.getElementById("co-find-l").addEventListener("click", () => calcCoil("inductance"));
+

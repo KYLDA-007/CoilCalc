@@ -104,3 +104,9 @@ main {
 .wire-table tbody tr:hover {
     background: #2b2b33;
 }
+.hidden {
+    display: none;
+}
+.form + .form {
+    margin-top: 12px;
+}
